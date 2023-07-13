@@ -1,16 +1,34 @@
 import Seo from '@/components/Seo'
-import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 export default function Home({ results }) {
+	const router = useRouter()
+	const onClick = (id, title) => {
+		router.push
+	}
+
 	return (
 		<div className="container">
 			<Seo title="Home" />
 
 			{results?.map((movie) => (
-				<div className="movie" key={movie.id}>
-					<img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
-					<h4>{movie.original_title}</h4>
-				</div>
+				<Link
+					key={movie.id}
+					href={{
+						pathname: `/movies/${movie.id}`, //pathname으로 보냄
+						query: {
+							//pathname페이지에서 useRouter로 사용 가능한 데이터 obj
+							title: movie.original_title
+						}
+					}}
+					as={`/movies/${movie.id}`} //pathname으로 이동된 페이지의 URL을 이렇게 보이게 함
+				>
+					<div className="movie">
+						<img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
+						<h4>{movie.original_title}</h4>
+					</div>
+				</Link>
 			))}
 			<style jsx>{`
 				.container {
@@ -18,6 +36,9 @@ export default function Home({ results }) {
 					grid-template-columns: 1fr 1fr;
 					padding: 20px;
 					gap: 20px;
+				}
+				.movie {
+					cursor: pointer;
 				}
 				.movie img {
 					max-width: 100%;
@@ -27,9 +48,6 @@ export default function Home({ results }) {
 				}
 				.movie:hover img {
 					transform: scale(1.05) translateY(-10px);
-				}
-				.movie {
-					cursor: pointer;
 				}
 				.movie h4 {
 					font-size: 18px;

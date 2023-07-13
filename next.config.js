@@ -18,6 +18,10 @@ const nextConfig = {
 			{
 				source: '/api/movies', // source의 url을 destㅑnation의 url로 변경
 				destination: `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
+			},
+			{
+				source: '/api/movies/:id',
+				destination: `https://api.themoviedb.org/3/movie/:id?api_key=${API_KEY}`
 			}
 		]
 	}
