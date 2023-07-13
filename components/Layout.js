@@ -5,6 +5,11 @@ export default function Layout({ children }) {
 		<>
 			<NavBar />
 			<div>{children}</div>
+			<style jsx>{`
+				div {
+					padding: 36px;
+				}
+			`}</style>
 		</>
 	)
 }
